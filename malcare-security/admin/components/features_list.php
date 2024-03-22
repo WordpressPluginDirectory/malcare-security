@@ -2,9 +2,24 @@
 	$heading = "MALCARE 360 DEGREE PROTECTION";
 	$subheading = "How can Malcare help protect your site?";
 	$img_url = plugins_url("/../../img/mc-features-list.png", __FILE__);
+	$firewall_logo = plugins_url("/../../img/firewall.svg", __FILE__);
+	$link_icon = plugins_url("/../../img/link_red.svg", __FILE__);
 	$intro_video_url = "https://youtu.be/rBuYh2dIadk";
+	$article_url = "https://www.malcare.com/blog/tagdiv-4-1-xss-vulnerability/?utm_source=marketing_banner&utm_content=add_new_account&utm_medium=plugin";
 	$brand_name = "MalCare";
 ?>
+<section id="marketing-banner" onclick="window.open('<?php echo esc_url($article_url)?>', '_blank')">
+	<div class='body'>
+		<div class='content'>
+			<div class='heading'>
+				A <span class='billion'>Billion</span> Attacks Blocked!
+				<img class='mb-2' src="<?php echo esc_url($link_icon); ?>" alt="Logo">
+			</div>
+			<div class='description'>Discover how MalCare defended against a massive wave of XSS attacks, blocking over 1.2 billion attempts. </div>
+		</div>
+		<img src="<?php echo esc_url($firewall_logo); ?>" width='75px' alt="Logo">
+	</div>
+</section>
 <section id="list-features">
 	<div class="custom-container">
 		<div class="heading text-center">

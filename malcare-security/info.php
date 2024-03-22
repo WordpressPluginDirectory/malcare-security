@@ -10,7 +10,7 @@ if (!class_exists('MCInfo')) :
 		public $badgeinfo = 'mcbadge';
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
-		public $version = '5.47';
+		public $version = '5.53';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';
@@ -55,6 +55,18 @@ if (!class_exists('MCInfo')) :
 			}
 
 			return false;
+		}
+
+		public function getConnectionKey() {
+			require_once dirname( __FILE__ ) . '/recover.php';
+			$bvsiteinfo = new MCWPSiteInfo();
+			return base64_encode(MCRecover::defaultSecret($this->settings).":".$bvsiteinfo->siteurl());
+		}
+
+		public function getDefaultSecret() {
+			require_once dirname( __FILE__ ) . '/recover.php';
+			$bvsiteinfo = new MCWPSiteInfo();
+			return MCRecover::defaultSecret($this->settings);
 		}
 
 		public function getLatestElementorDBVersion($file) {

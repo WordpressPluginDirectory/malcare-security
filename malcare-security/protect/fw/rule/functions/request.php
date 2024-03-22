@@ -1,8 +1,8 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!trait_exists('MCProtectFWRuleRequestFunc_V547')) :
-trait MCProtectFWRuleRequestFunc_V547 {
+if (!trait_exists('MCProtectFWRuleRequestFunc_V553')) :
+trait MCProtectFWRuleRequestFunc_V553 {
 	private function _rf_getAction() {
 		$args = $this->processRuleFunctionParams(
 			'getAction',
@@ -177,6 +177,16 @@ trait MCProtectFWRuleRequestFunc_V547 {
 		return $this->request->getTimeStamp();
 	}
 
+	private function _rf_getContentType() {
+		$args = $this->processRuleFunctionParams(
+			'getContentType',
+			func_num_args(),
+			func_get_args()
+		);
+
+		return $this->request->getContentType();
+	}
+
 	private function _rf_getAllParams() {
 		$args = $this->processRuleFunctionParams(
 			'getAllParams',
@@ -295,6 +305,26 @@ trait MCProtectFWRuleRequestFunc_V547 {
 		return $this->request->getPostParamsV2();
 	}
 
+	private function _rf_getJsonParams() {
+		$this->processRuleFunctionParams(
+			'getJsonParams',
+			func_num_args(),
+			func_get_args()
+		);
+
+		return $this->request->getJsonParams();
+	}
+
+	private function _rf_getRawBody() {
+		$this->processRuleFunctionParams(
+			'getRawBody',
+			func_num_args(),
+			func_get_args()
+		);
+
+		return $this->request->getRawBody();
+	}
+
 	private function _rf_wpUserRoleLevel() {
 		$args = $this->processRuleFunctionParams(
 			'wpUserRoleLevel',
@@ -372,7 +402,7 @@ trait MCProtectFWRuleRequestFunc_V547 {
 		$user = $this->_rf_getCurrentWPUser();
 
 		if (!array_key_exists('ID', $user)) {
-			throw new MCProtectRuleError_V547(
+			throw new MCProtectRuleError_V553(
 				$this->addExState("wpUserId: user's id doesn't exist")
 			);
 		}

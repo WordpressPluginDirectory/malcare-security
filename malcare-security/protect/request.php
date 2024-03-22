@@ -1,8 +1,8 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectRequest_V547')) :
-class MCProtectRequest_V547 {
+if (!class_exists('MCProtectRequest_V553')) :
+class MCProtectRequest_V553 {
 	public $ip;
 	public $host = '';
 	public $uri;
@@ -14,12 +14,19 @@ class MCProtectRequest_V547 {
 	public $cookies;
 	public $headers = array();
 	public $file_names = array();
+	public $json_params = array();
+	public $raw_body = '';
 	public $files;
 	public $respcode;
-	public $status = MCProtectRequest_V547::STATUS_ALLOWED;
-	public $category = MCProtectRequest_V547::CATEGORY_NORMAL;
+	public $status = MCProtectRequest_V553::STATUS_ALLOWED;
+	public $category = MCProtectRequest_V553::CATEGORY_NORMAL;
 
 	public $wp_user;
+
+	private $can_get_raw_body = false;
+	private $max_raw_body_length = 1000000;
+	private $can_decode_json = false;
+	private $max_json_decode_depth = 512;
 
 	#XNOTE: SHould be part of Protect.
 	const STATUS_ALLOWED  = 1;
@@ -37,13 +44,30 @@ class MCProtectRequest_V547 {
 	const CATEGORY_PRIVATEIP          = 80;
 	const CATEGORY_GLOBAL_BOT_BLOCKED = 90;
 
-	public function __construct($ip_header) {
-		$this->ip = MCProtectUtils_V547::getIP($ip_header);
+	public function __construct($ip_header, $config) {
+		$this->ip = MCProtectUtils_V553::getIP($ip_header);
 		$this->timestamp = time();
 		$this->get_params = $_GET;
 		$this->cookies = $_COOKIE;
 		$this->post_params = $_POST;
 		$this->files = $_FILES;
+
+		if (array_key_exists('cangetrawbody', $config) && is_bool($config['cangetrawbody'])) {
+			$this->can_get_raw_body = $config['cangetrawbody'];
+		}
+
+		if (array_key_exists('maxrawbodylength', $config) && is_int($config['maxrawbodylength'])) {
+			$this->max_raw_body_length = $config['maxrawbodylength'];
+		}
+
+		if (array_key_exists('candecodejson', $config) && is_bool($config['candecodejson'])) {
+			$this->can_decode_json = $config['candecodejson'];
+		}
+
+		if (array_key_exists('maxjsondecodedepth', $config) && is_int($config['maxjsondecodedepth'])) {
+			$this->max_json_decode_depth = $config['maxjsondecodedepth'];
+		}
+
 		if (!empty($_FILES)) {
 			foreach ($_FILES as $input => $file) {
 				$this->file_names[$input] = $file['name'];
@@ -84,19 +108,36 @@ class MCProtectRequest_V547 {
 			$_uri = parse_url($this->uri);
 			$this->path = (is_array($_uri) && array_key_exists('path', $_uri)) ? $_uri['path']  : $this->uri;
 		}
+
+		if ($this->can_get_raw_body) {
+			$_raw_body = file_get_contents("php://input", false, null, 0, $this->max_raw_body_length);
+			if ($_raw_body !== false) {
+				$this->raw_body = $_raw_body;
+			}
+		}
+
+		if ($this->can_decode_json) {
+			if ($this->getContentType() === "application/json" && !empty($this->raw_body)) {
+				$_json_params = MCProtectUtils_V553::safeDecodeJSON($this->raw_body,
+						true, $this->max_json_decode_depth);
+				if (isset($_json_params)) {
+					$this->json_params['JSON'] = $_json_params;
+				}
+			}
+		}
 	}
 
 	public static function blacklistedCategories() {
 		return array(
-			MCProtectRequest_V547::CATEGORY_BOT_BLOCKED,
-			MCProtectRequest_V547::CATEGORY_COUNTRY_BLOCKED,
-			MCProtectRequest_V547::CATEGORY_USER_BLACKLISTED,
-			MCProtectRequest_V547::CATEGORY_GLOBAL_BOT_BLOCKED
+			MCProtectRequest_V553::CATEGORY_BOT_BLOCKED,
+			MCProtectRequest_V553::CATEGORY_COUNTRY_BLOCKED,
+			MCProtectRequest_V553::CATEGORY_USER_BLACKLISTED,
+			MCProtectRequest_V553::CATEGORY_GLOBAL_BOT_BLOCKED
 		);
 	}
 
 	public static function whitelistedCategories() {
-		return array(MCProtectRequest_V547::CATEGORY_WHITELISTED);
+		return array(MCProtectRequest_V553::CATEGORY_WHITELISTED);
 	}
 
 	public function setRespCode($code) {
@@ -162,7 +203,7 @@ class MCProtectRequest_V547 {
 	}
 
 	public function getAllParams() {
-		return array("getParams" => $this->get_params, "postParams" => $this->post_params);
+		return array("getParams" => $this->get_params, "postParams" => $this->post_params, "jsonParams" => $this->json_params);
 	}
 
 	public function getHeader($key) {
@@ -266,6 +307,26 @@ class MCProtectRequest_V547 {
 
 	public function getCookiesV2() {
 		return $this->cookies;
+	}
+
+	public function getJsonParams() {
+		return $this->json_params;
+	}
+
+	public function getRawBody() {
+		return $this->raw_body;
+	}
+
+	public function getContentType() {
+		if (array_key_exists('Content-Type', $this->headers)) {
+			return $this->headers['Content-Type'];
+		}
+	}
+
+	public function getContentLength() {
+		if (array_key_exists('Content-Length', $this->headers)) {
+			return $this->headers['Content-Length'];
+		}
 	}
 }
 endif;

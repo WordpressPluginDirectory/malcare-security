@@ -714,7 +714,6 @@ class BVManageCallback extends BVCallbackBase {
 			}
 
 			$manager = new $managerClass();
-
 			$required_methods = array('get_task_runner', 'should_upgrade', 'on_runner_complete',
 					'get_current_version', 'get_new_version');
 			foreach ($required_methods as $method) {

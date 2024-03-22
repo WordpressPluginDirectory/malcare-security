@@ -7,9 +7,14 @@ if (!class_exists('MCRecover')) :
 		public static function defaultSecret($settings) {
 			$secret = self::getDefaultSecret($settings);
 			if (empty($secret)) {
-				$secret = MCAccount::randString(32);
-				self::updateDefaultSecret($settings, $secret);
+				$secret = MCRecover::refreshDefaultSecret($settings);
 			}
+			return $secret;
+		}
+
+		public static function refreshDefaultSecret($settings) {
+			$secret = MCAccount::randString(32);
+			self::updateDefaultSecret($settings, $secret);
 			return $secret;
 		}
 
