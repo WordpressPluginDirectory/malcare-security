@@ -40,7 +40,7 @@ class BVProtectCallback extends BVCallbackBase {
 	}
 
 	public function unBlockIP($ip, $attempts, $time) {
-		$transient_name = MCProtectLP_V553::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
+		$transient_name = MCProtectLP_V555::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
 		$this->settings->setTransient($transient_name, $attempts, $time);
 		return $this->settings->getTransient($transient_name);
 	}
