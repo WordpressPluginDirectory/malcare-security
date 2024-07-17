@@ -10,7 +10,7 @@ if (!class_exists('MCInfo')) :
 		public $badgeinfo = 'mcbadge';
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
-		public $version = '5.56';
+		public $version = '5.65';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';
@@ -60,7 +60,10 @@ if (!class_exists('MCInfo')) :
 		public function getConnectionKey() {
 			require_once dirname( __FILE__ ) . '/recover.php';
 			$bvsiteinfo = new MCWPSiteInfo();
-			return base64_encode(MCRecover::defaultSecret($this->settings).":".$bvsiteinfo->siteurl());
+			$encoded_url = base64_encode($bvsiteinfo->siteurl());
+			$secret = MCRecover::defaultSecret($this->settings);
+
+			return base64_encode("v1:".$secret.":".$encoded_url);
 		}
 
 		public function getDefaultSecret() {
