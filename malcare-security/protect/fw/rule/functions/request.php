@@ -1,8 +1,8 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!trait_exists('MCProtectFWRuleRequestFunc_V565')) :
-trait MCProtectFWRuleRequestFunc_V565 {
+if (!trait_exists('MCProtectFWRuleRequestFunc_V567')) :
+trait MCProtectFWRuleRequestFunc_V567 {
 	private function _rf_getAction() {
 		$args = $this->processRuleFunctionParams(
 			'getAction',
@@ -402,7 +402,7 @@ trait MCProtectFWRuleRequestFunc_V565 {
 		$user = $this->_rf_getCurrentWPUser();
 
 		if (!array_key_exists('ID', $user)) {
-			throw new MCProtectRuleError_V565(
+			throw new MCProtectRuleError_V567(
 				$this->addExState("wpUserId: user's id doesn't exist")
 			);
 		}

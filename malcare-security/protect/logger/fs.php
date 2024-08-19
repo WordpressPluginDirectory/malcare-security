@@ -1,8 +1,8 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectLoggerFS_V565')) :
-class MCProtectLoggerFS_V565 {
+if (!class_exists('MCProtectLoggerFS_V567')) :
+class MCProtectLoggerFS_V567 {
 	public $logFile;
 
 	function __construct($filename) {
