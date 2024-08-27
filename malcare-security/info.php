@@ -10,7 +10,7 @@ if (!class_exists('MCInfo')) :
 		public $badgeinfo = 'mcbadge';
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
-		public $version = '5.67';
+		public $version = '5.68';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';
@@ -21,7 +21,8 @@ if (!class_exists('MCInfo')) :
 		public $author = 'MalCare Security';
 		public $title = 'MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall';
 
-		const DB_VERSION = '4';
+		const DB_VERSION = '5';
+		const AL_CONF_VERSION = '1.1';
 
 		public function __construct($settings) {
 			$this->settings = $settings;
