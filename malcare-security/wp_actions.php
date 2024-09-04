@@ -37,10 +37,12 @@ if (!class_exists('MCWPAction')) :
 		}
 
 		public static function uninstall() {
-			do_action('clear_pt_config');
-			do_action('clear_dynsync_config');
+			do_action('mc_clear_pt_config');
+			do_action('mc_clear_dynsync_config');
 			##CLEARCACHECONFIG##
-			do_action('clear_bv_services_config');
+			do_action('mc_clear_bv_services_config');
+			do_action('mc_remove_bv_preload_include');
+			do_action('mc_clear_php_error_config');
 		}
 
 		public function clear_bv_services_config() {
@@ -56,5 +58,11 @@ if (!class_exists('MCWPAction')) :
 					<a href='.esc_url($bvfooter['badgeurl']).' target="_blank" ><img src="'.esc_url(plugins_url($bvfooter['badgeimg'], __FILE__)).'" alt="'.esc_attr($bvfooter['badgealt']).'" /></a></div>';
 			}
 		}
+
+		public function removeBVPreload() {
+			$pattern = "@include '" . rtrim(ABSPATH, DIRECTORY_SEPARATOR) . "/bv-preload.php" . "';";
+			MCHelper::removePatternFromWpConfig($pattern);
+		}
+
 	}
 endif;
