@@ -19,7 +19,7 @@ class BVCallbackBase {
 		"FS_WRITE_WING_VERSION" => '1.0',
 		"IPSTORE_WING_VERSION" => '1.4',
 		"PROTECT_WING_VERSION" => '1.2',
-		"SECURITY_WING_VERSION" => '1.1',
+		"SECURITY_WING_VERSION" => '1.2',
 		);
 
 	public function objectToArray($obj) {

@@ -2,6 +2,12 @@
 if (!defined('ABSPATH')) exit;
 if (!class_exists('BVSecurityCallback')) :
 	class BVSecurityCallback extends BVCallbackBase {
+		private $settings;
+
+		public function __construct() {
+			$this->settings = new MCWPSettings();
+		}
+
 		function getCrontab() {
 			$resp = array();
 
@@ -33,7 +39,7 @@ if (!class_exists('BVSecurityCallback')) :
 			return $resp;
 		}
 
-		public function setupWP2FA($user_id, $secret, $to_encrypt = true, $cipher_algo = null) {
+		public function setupWP2FA($user_id, $secret, $to_encrypt = true, $cipher_algo = null, $enabled = null) {
 			if ($to_encrypt === true) {
 				if (empty($cipher_algo)) {
 					$cipher_algo = MCWP2FA::$cipher_algo;
@@ -54,9 +60,13 @@ if (!class_exists('BVSecurityCallback')) :
 				"secret" => base64_encode($secret),
 				"is_encrypted" => $to_encrypt
 			);
-
 			update_user_meta($user_id, MCWP2FA::SECRET_META_KEY, $secret_info);
 			update_user_meta($user_id, MCWP2FA::FLAG_META_KEY, true);
+
+			if (is_bool($enabled)) {
+				$config = array("enabled" => $enabled);
+				$this->settings->updateOption(MCWP2FA::$wp_2fa_option, $config);
+			}
 			return array("status" => true);
 		}
 
@@ -113,7 +123,11 @@ if (!class_exists('BVSecurityCallback')) :
 				$resp = $this->getCrontab();
 				break;
 			case "stupwp2fa":
-				$resp = $this->setupWP2FA($request->params['user_id'], $request->params['secret'], $request->params['to_encrypt'], $request->params['cipher_algo']);
+				$enable_wp_2fa = null;
+				if (array_key_exists('enable_wp_2fa', $request->params)) {
+					$enable_wp_2fa = $request->params['enable_wp_2fa'];
+				}
+				$resp = $this->setupWP2FA($request->params['user_id'], $request->params['secret'], $request->params['to_encrypt'], $request->params['cipher_algo'], $enable_wp_2fa);
 				break;
 			case "vrfywp2fa":
 				$resp = $this->verifyWP2FACode($request->params['user_id'], $request->params['code'], $request->params['cipher_algo']);

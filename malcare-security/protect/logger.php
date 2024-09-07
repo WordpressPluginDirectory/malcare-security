@@ -1,21 +1,21 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectLogger_V572')) :
+if (!class_exists('MCProtectLogger_V573')) :
 require_once dirname( __FILE__ ) . '/logger/fs.php';
 require_once dirname( __FILE__ ) . '/logger/db.php';
 
-class MCProtectLogger_V572 {
+class MCProtectLogger_V573 {
 	private $log_destination;
 
 	const TYPE_FS = 0;
 	const TYPE_DB = 1;
 
-	function __construct($name, $type = MCProtectLogger_V572::TYPE_DB) {
-		if ($type == MCProtectLogger_V572::TYPE_FS) {
-			$this->log_destination = new MCProtectLoggerFS_V572($name);
+	function __construct($name, $type = MCProtectLogger_V573::TYPE_DB) {
+		if ($type == MCProtectLogger_V573::TYPE_FS) {
+			$this->log_destination = new MCProtectLoggerFS_V573($name);
 		} else {
-			$this->log_destination = new MCProtectLoggerDB_V572($name);
+			$this->log_destination = new MCProtectLoggerDB_V573($name);
 		}
 	}
 

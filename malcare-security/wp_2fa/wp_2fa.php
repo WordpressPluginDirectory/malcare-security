@@ -10,8 +10,29 @@ class MCWP2FA {
 	const SECRET_META_KEY = 'mc_2fa_secret';
 
 	public static $cipher_algo = 'aes-256-cbc';
+	public static $wp_2fa_option = 'mcWp2faConf';
+	private $settings;
+	private $config;
+
+	public function __construct() {
+		$this->settings = new MCWPSettings();
+		$this->config = $this->settings->getOption(self::$wp_2fa_option);
+	}
+
+	private function can_init() {
+		if (is_array($this->config) && array_key_exists('enabled', $this->config) &&
+				$this->config['enabled'] === true) {
+
+			return true;
+		}
+		return false;
+	}
 
 	public function init() {
+		if ($this->can_init() === false) {
+			return;
+		}
+
 		add_filter('authenticate', array($this, 'authenticate'), 25, 3);
 		add_action('login_form', array($this, 'custom_login_form'));
 	}
