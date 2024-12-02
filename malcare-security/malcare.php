@@ -5,8 +5,10 @@ Plugin URI: https://www.malcare.com
 Description: MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall
 Author: MalCare Security
 Author URI: https://www.malcare.com
-Version: 5.77
+Version: 5.85
 Network: True
+License: GPLv2 or later
+License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
  */
 
 /*  Copyright 2017  MalCare  (email : support@malcare.com )
@@ -93,8 +95,8 @@ if (is_admin()) {
 	##ALADMINMENU##
 }
 
-if ((array_key_exists('bvreqmerge', $_POST)) || (array_key_exists('bvreqmerge', $_GET))) {
-	$_REQUEST = array_merge($_GET, $_POST);
+if ((array_key_exists('bvreqmerge', $_POST)) || (array_key_exists('bvreqmerge', $_GET))) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+	$_REQUEST = array_merge($_GET, $_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
 }
 
 #Service active check
@@ -122,25 +124,26 @@ if ($bvinfo->hasValidDBVersion()) {
 
 }
 
-if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "malcare")) {
+if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "malcare")) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	require_once dirname( __FILE__ ) . '/callback/base.php';
 	require_once dirname( __FILE__ ) . '/callback/response.php';
 	require_once dirname( __FILE__ ) . '/callback/request.php';
 	require_once dirname( __FILE__ ) . '/recover.php';
 
-	$pubkey = MCAccount::sanitizeKey($_REQUEST['pubkey']);
+	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
+	$pubkey = isset($_REQUEST['pubkey']) ? MCAccount::sanitizeKey(wp_unslash($_REQUEST['pubkey'])) : '';
 
-	if (array_key_exists('rcvracc', $_REQUEST)) {
+	if (array_key_exists('rcvracc', $_REQUEST)) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$account = MCRecover::find($bvsettings, $pubkey);
 	} else {
 		$account = MCAccount::find($bvsettings, $pubkey);
 	}
 
-	$request = new BVCallbackRequest($account, $_REQUEST, $bvsettings);
+	$request = new BVCallbackRequest($account, $_REQUEST, $bvsettings); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$response = new BVCallbackResponse($request->bvb64cksize);
 
 	if ($request->authenticate() === 1) {
-		if (array_key_exists('bv_ignr_frm_cptch', $_REQUEST)) {
+		if (array_key_exists('bv_ignr_frm_cptch', $_REQUEST)) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			#handling of Contact Forms 7
 			add_filter('wpcf7_skip_spam_check', '__return_true', PHP_INT_MAX, 2);
 
@@ -171,13 +174,45 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 					$apbct->settings['forms__contact_forms_test'] = 0;
 				}
 			});
-		} else {
+
+			#handling of Akismet plugin
+			add_filter('akismet_get_api_key', function($api_key) { return null; }, PHP_INT_MAX);
+
+			#handling of Formidable Antispam
+			add_filter('frm_validate_entry', function($errors, $values, $args) {
+				unset($errors['spam']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				return $errors;
+			}, PHP_INT_MAX, 3);
+
+			#handling of Gravity Form plugin
+			if (isset($_REQUEST['form_id'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$form_id = sanitize_text_field(wp_unslash($_REQUEST['form_id'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				add_filter('gform_pre_validation_' . $form_id, function($form) {
+					foreach ($form['fields'] as &$field) {
+						if ($field['type'] === 'captcha') {
+							$field->visibility = 'hidden';
+						}
+					}
+					return $form;
+				}, PHP_INT_MAX, 1);
+			}
+		}
+
+		if (array_key_exists('bv_ignr_eml', $_REQUEST)) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			#handling of Gravity Form's Email
+			add_filter('gform_pre_send_email', function($email_data) {
+				$email_data['abort_email'] = true;
+				return $email_data;
+			}, PHP_INT_MAX, 1);
+		}
+
+		if (!array_key_exists('bv_ignr_frm_cptch', $_REQUEST) && !array_key_exists('bv_ignr_eml', $_REQUEST)) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			define('MCBASEPATH', plugin_dir_path(__FILE__));
 
 
 			require_once dirname( __FILE__ ) . '/callback/handler.php';
 
-			$params = $request->processParams($_REQUEST);
+			$params = $request->processParams($_REQUEST); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ($params === false) {
 				$response->terminate($request->corruptedParamsResp());
 			}
@@ -200,14 +235,14 @@ if ((array_key_exists('bvplugname', $_REQUEST)) && ($_REQUEST['bvplugname'] == "
 		if ($bvinfo->isProtectModuleEnabled()) {
 			require_once dirname( __FILE__ ) . '/protect/protect.php';
 			//For backward compatibility.
-			MCProtect_V577::$settings = new MCWPSettings();
-			MCProtect_V577::$db = new MCWPDb();
-			MCProtect_V577::$info = new MCInfo(MCProtect_V577::$settings);
+			MCProtect_V585::$settings = new MCWPSettings();
+			MCProtect_V585::$db = new MCWPDb();
+			MCProtect_V585::$info = new MCInfo(MCProtect_V585::$settings);
 
-			add_action('mc_clear_pt_config', array('MCProtect_V577', 'uninstall'));
+			add_action('mc_clear_pt_config', array('MCProtect_V585', 'uninstall'));
 
 			if ($bvinfo->isActivePlugin()) {
-				MCProtect_V577::init(MCProtect_V577::MODE_WP);
+				MCProtect_V585::init(MCProtect_V585::MODE_WP);
 			}
 		}
 

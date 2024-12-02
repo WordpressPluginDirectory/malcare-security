@@ -7,7 +7,7 @@ class BVManageCallback extends BVCallbackBase {
 	public $skin;
 	public $bvinfo;
 
-	const MANAGE_WING_VERSION = 1.6;
+	const MANAGE_WING_VERSION = 1.7;
 
 	public function __construct($callback_handler) {
 		$this->settings = $callback_handler->settings;
@@ -282,16 +282,6 @@ class BVManageCallback extends BVCallbackBase {
 				return array('status' => 'Done');
 			}
 		} else {
-			$resp = array("wp_update_core", function_exists('wp_update_core'));
-			if (function_exists('wp_update_core')) {
-				$result = wp_update_core($to_update);
-				if (is_wp_error($result)) {
-					return array('status' => "Error", "message" => $this->getError($result));
-				} else {
-					return array('status' => 'Done');
-				}
-			}
-
 			$resp = array("WP_Upgrader", class_exists('WP_Upgrader'));
 			if (class_exists('WP_Upgrader')) {
 				$upgrader = new WP_Upgrader();
@@ -443,6 +433,9 @@ class BVManageCallback extends BVCallbackBase {
 			} else {
 				$result = $upgrader->bulk_upgrade(array_keys($_plugins));
 			}
+			if (!is_array($result)) {
+				return array('status' => "Error", 'message' =>'result is not an array');
+			}
 			foreach (array_keys($_plugins) as $file) {
 				if (!array_key_exists($file, $result)) {
 					$result[$file] = array('status' => "Error");
@@ -560,6 +553,9 @@ class BVManageCallback extends BVCallbackBase {
 				$result = $this->bv_theme_bulk_upgrade($upgrader, $_themes);
 			} else {
 				$result = $upgrader->bulk_upgrade(array_keys($_themes));
+			}
+			if (!is_array($result)) {
+				return array('status' => "Error", 'message' =>'result is not an array');
 			}
 			foreach (array_keys($_themes) as $stylesheet) {
 				if (!array_key_exists($stylesheet, $result)) {
