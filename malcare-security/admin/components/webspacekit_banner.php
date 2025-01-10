@@ -36,15 +36,18 @@ if (array_key_exists('page', $_REQUEST) && $_REQUEST['page'] == $this->bvinfo->p
 					<?php endif; ?>
 					<img src="<?php echo esc_url(plugins_url('/../../img/security.svg', __FILE__)); ?>" alt="" loading="lazy">
 				</div>
-				<h3><?php echo $message; ?></h3>
+				<h3><?php echo esc_html($message); ?></h3>
 				<div class="wsk-grad-btn-wrapper">
 					<form action="<?php echo esc_url($this->bvinfo->appUrl()); ?>/plugin/webspacekit_signup" onsubmit="document.getElementById('get-started').disabled = true;"  method="post" name="signup">
 						<input type='hidden' name='bvsrc' value='wpplugin'/>
 						<input type='hidden' name='origin' value='webspacekit'/>
 						<input type='hidden' name='is_malcare_active' value='true'/>
 						<input type='hidden' name='is_airlift_active' value='<?php echo $isAirliftPresent ? 'true' : 'false'; ?>'/>
-						<?php echo $this->siteInfoTags(); ?>
-						<input type="hidden" id="email" name="email" value="<?php echo  wp_get_current_user()->user_email; ?>">
+						<?php
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already Escaped
+							echo $this->siteInfoTags();
+						?>
+						<input type="hidden" id="email" name="email" value="<?php echo esc_attr(wp_get_current_user()->user_email); ?>">
 						<input type="hidden" name="consent" value="1">
 						<button class="wsk-btn" type="submit">Get Started</button>
 					</form>

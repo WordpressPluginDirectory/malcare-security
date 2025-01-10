@@ -1,17 +1,16 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectUtils_V585')) :
-class MCProtectUtils_V585 {
+if (!class_exists('MCProtectUtils_V591')) :
+class MCProtectUtils_V591 {
 	public static function getIP($ip_header) {
 		$ip = null;
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if (is_array($ip_header)) {
 			if ((array_key_exists('hdr', $ip_header) && is_string($ip_header['hdr'])) &&
 					(array_key_exists('pos', $ip_header) && is_int($ip_header['pos']))) {
 
 				if (array_key_exists($ip_header['hdr'], $_SERVER) && is_string($_SERVER[$ip_header['hdr']])) {
-					$_ips = preg_split("/(,| |\t)/", MCHelper::unslashIfWPLoaded($_SERVER[$ip_header['hdr']])); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+					$_ips = preg_split("/(,| |\t)/", MCHelper::getRawParam('SERVER', $ip_header['hdr']));
 
 					if (array_key_exists($ip_header['pos'], $_ips)) {
 						$ip = $_ips[$ip_header['pos']];
@@ -19,7 +18,7 @@ class MCProtectUtils_V585 {
 				}
 			}
 		} elseif (array_key_exists('REMOTE_ADDR', $_SERVER)) {
-			$ip = MCHelper::unslashIfWPLoaded($_SERVER['REMOTE_ADDR']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$ip = MCHelper::getRawParam('SERVER', 'REMOTE_ADDR');
 		}
 
 		if (is_string($ip)) {
@@ -31,7 +30,6 @@ class MCProtectUtils_V585 {
 				$ip = $matches[1];
 			}
 		}
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 		return self::isValidIP($ip) ? $ip : '127.0.0.1';
 	}
@@ -122,10 +120,8 @@ class MCProtectUtils_V585 {
 	}
 
 	public static function rrmdir($dir) {
-		$filesystem = MCHelper::get_direct_filesystem();
-
-		if ($filesystem->is_dir($dir)) {
-			$filesystem->rmdir($dir, true);
+		if (MCWPFileSystem::getInstance()->isDir($dir) === true) {
+			MCWPFileSystem::getInstance()->rmdir($dir, true);
 		}
 	}
 
@@ -134,7 +130,7 @@ class MCProtectUtils_V585 {
 
 		if (is_array($val)) {
 			foreach ($val as $e) {
-				$length += MCProtectUtils_V585::getLength($e);
+				$length += MCProtectUtils_V591::getLength($e);
 			}
 
 			return $length;
@@ -147,7 +143,7 @@ class MCProtectUtils_V585 {
 		$result = array();
 
 		if (file_exists($fname)) {
-			$content = file_get_contents($fname); // phpcs: WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			$content = file_get_contents($fname); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 			if (($content !== false) && is_string($content)) {
 				$result = json_decode($content, true);
 
@@ -161,13 +157,11 @@ class MCProtectUtils_V585 {
 	}
 
 	public static function fileRemovePattern($fname, $pattern, $regex_pattern = false) {
-		$filesystem = MCHelper::get_direct_filesystem();
-
-		if (!$filesystem->exists($fname)) {
+		if (MCWPFileSystem::getInstance()->exists($fname) === false) {
 			return;
 		}
 
-		$content = $filesystem->get_contents($fname);
+		$content = MCWPFileSystem::getInstance()->getContents($fname);
 		if ($content !== false) {
 			if ($regex_pattern) {
 				$modified_content = preg_replace($pattern, "", $content);
@@ -176,7 +170,8 @@ class MCProtectUtils_V585 {
 			}
 
 			if ($content !== $modified_content) {
-				$filesystem->put_contents($fname, $modified_content, intval($filesystem->getchmod($fname), 8));
+				MCWPFileSystem::getInstance()->putContents($fname, $modified_content,
+						MCWPFileSystem::getInstance()->getchmodOctal($fname));
 			}
 		}
 	}

@@ -6,7 +6,7 @@ Donate link: https://www.malcare.com
 Requires at least: 4.0
 Tested up to: 6.7
 Requires PHP: 5.6.0
-Stable tag: 5.85
+Stable tag: 5.91
 License: GPLv2 or later
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -403,6 +403,13 @@ These are available on our website: [Terms of Service](https://www.malcare.com/t
 8. MalCare’s Uptime Monitoring notifies if a website goes down so that you can handle the situation before starting to lose visitors.
 
 == CHANGELOG ==
+= 5.91 =
+* Tweak: Code Restructuring
+
+= 5.88 =
+* Fix: Resolved compatibility issues with WordPress versions below 6.2.
+* Tweak: Added support for PHP 8.4
+
 = 5.85 =
 * New: Added Gravity Forms support in Form Testing.
 * Tweak: Code Restructuring

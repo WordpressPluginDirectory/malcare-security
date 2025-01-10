@@ -25,7 +25,7 @@ class MCWPAdmin {
 	}
 
 	public function removeAdminNotices() {
-		if (array_key_exists('page', $_REQUEST) && $_REQUEST['page'] == $this->bvinfo->plugname) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if (MCHelper::getRawParam('REQUEST', 'page') === $this->bvinfo->plugname) {
 			remove_all_actions('admin_notices');
 			remove_all_actions('all_admin_notices');
 		}
@@ -48,19 +48,17 @@ class MCWPAdmin {
 	public function initHandler() {
 		if (!current_user_can('activate_plugins'))
 			return;
-		$bvnonce = isset($_REQUEST['bvnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['bvnonce'])) : '';
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- using custom sanitization
-		$blogvaultkey = isset($_REQUEST['blogvaultkey']) ? MCAccount::sanitizeKey(wp_unslash($_REQUEST['blogvaultkey'])) : '';
-		$page = isset($_REQUEST['page']) ? sanitize_text_field(wp_unslash($_REQUEST['page'])) : '';
+		$bvnonce = MCHelper::getRawParam('REQUEST', 'bvnonce');
+		$blogvaultkey = MCHelper::getRawParam('REQUEST', 'blogvaultkey');
+		$blogvaultkey = $blogvaultkey ? MCAccount::sanitizeKey($blogvaultkey) : "";
 
 		if ($bvnonce && wp_verify_nonce($bvnonce, "bvnonce") &&
-			$blogvaultkey && strlen($blogvaultkey) == 64 &&
-			($page && $page === $this->bvinfo->plugname)) {
+				$blogvaultkey && strlen($blogvaultkey) == 64 &&
+				(MCHelper::getRawParam('REQUEST', 'page') === $this->bvinfo->plugname)) {
 			$keys = str_split($blogvaultkey, 32);
 			MCAccount::addAccount($this->settings, $keys[0], $keys[1]);
-
-			if (array_key_exists('redirect', $_REQUEST)) {
-				$location = esc_url_raw(wp_unslash($_REQUEST['redirect']));
+			$pubkey = $keys[0];
+			if (array_key_exists($_REQUEST, 'redirect')) {
 				$this->account = MCAccount::find($this->settings, $pubkey);
 				wp_redirect($this->account->authenticatedUrl('/malcare/access/welcome'));
 				exit();
@@ -77,9 +75,11 @@ class MCWPAdmin {
 
 	public function handleDismissWSKBanner() {
 		$user_id = get_current_user_id();
-		$bvnonce = isset($_REQUEST['bvnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['bvnonce'])) : '';
-		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' &&
-				isset($_POST['dismiss_wsk_banner']) && wp_verify_nonce($bvnonce, 'dismiss_wsk_banner')) {
+		$wpnonce = MCHelper::getRawParam('POST', '_wpnonce');
+		$dismiss_wsk_banner = MCHelper::getRawParam('POST', 'dismiss_wsk_banner');
+		if (MCHelper::getRawParam('SERVER', 'REQUEST_METHOD') === 'POST' &&
+				isset($dismiss_wsk_banner) &&
+				isset($wpnonce) && wp_verify_nonce($wpnonce, 'dismiss_wsk_banner')) {
 			update_user_meta($user_id, 'wsk_banner_dismissed', true);
 		}
 	}
@@ -100,12 +100,13 @@ class MCWPAdmin {
 		if ($this->siteinfo->isWSKHosted()) {
 			$this->handleDismissWSKBanner();
 			$bannerDismissed = get_user_meta(get_current_user_id(), 'wsk_banner_dismissed', true);
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if (!$bannerDismissed || (array_key_exists('page', $_REQUEST) && $_REQUEST['page'] == $this->bvinfo->plugname)) {
-				if ( $this->canShowWSKBanner() ){
+			if (!$bannerDismissed || (MCHelper::getRawParam('REQUEST', 'page') === $this->bvinfo->plugname)) {
+				if ($this->canShowWSKBanner()) {
 					add_action('admin_enqueue_scripts', function () {
-						wp_enqueue_style('wsk-fonts', 'https://fonts.googleapis.com/css2?family=Karla&family=Montserrat:wght@400;500;600;700&display=block');
-						wp_enqueue_style('wsk-stylesheet', plugins_url('css/webspacekit_banner.min.css', __FILE__));
+						wp_enqueue_style('wsk-fonts',
+								'https://fonts.googleapis.com/css2?family=Karla&family=Montserrat:wght@400;500;600;700&display=block',
+								array(), $this->bvinfo->version);
+						wp_enqueue_style('wsk-stylesheet', plugins_url('css/webspacekit_banner.min.css', __FILE__), array(), $this->bvinfo->version);
 					});
 					add_action('in_admin_header', function () {
 						add_action('all_admin_notices', [$this, 'loadWSKBanner']);
@@ -122,8 +123,8 @@ class MCWPAdmin {
 	public function mcsecAdminMenu($hook) {
 		if ($hook === 'toplevel_page_malcare' || MCHelper::safePregMatch("/bv_add_account$/", $hook) ||
 				MCHelper::safePregMatch("/bv_account_details$/", $hook)) {
-			wp_enqueue_style( 'bootstrap', plugins_url('css/bootstrap.min.css', __FILE__));
-			wp_enqueue_style( 'bvplugin', plugins_url('css/bvplugin.min.css', __FILE__));
+			wp_enqueue_style('bootstrap', plugins_url('css/bootstrap.min.css', __FILE__), array(), $this->bvinfo->version);
+			wp_enqueue_style('bvplugin', plugins_url('css/bvplugin.min.css', __FILE__), array(), $this->bvinfo->version);
 		}
 	}
 
@@ -170,7 +171,8 @@ class MCWPAdmin {
 		$whitelabel_info = $this->bvinfo->getPluginWhitelabelInfo($slug);
 		if (array_key_exists('hide_plugin_details', $whitelabel_info)) {
 			foreach ($plugin_metas as $pluginKey => $pluginValue) {
-				if (strpos($pluginValue, sprintf('>%s<', translate('View details')))) {
+				// phpcs:ignore WordPress.WP.I18n.MissingArgDomain
+				if (strpos($pluginValue, sprintf('>%s<', __('View details')))) {
 					unset($plugin_metas[$pluginKey]);
 					break;
 				}
@@ -216,9 +218,10 @@ class MCWPAdmin {
 			if (!$this->bvinfo->canSetCWBranding()) {
 				$brand = $this->bvinfo->getPluginWhitelabelInfo();
 				if (!is_array($brand) || !array_key_exists('hide_from_menu', $brand)) {
-					$settings_link = '<a href="'.$this->mainUrl().'">'.__( 'Settings' ).'</a>';
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomain
+					$settings_link = '<a href="'.$this->mainUrl().'">'.__('Settings').'</a>';
 					array_unshift($links, $settings_link);
-					$account_details = '<a href="'.$this->mainUrl('&account_details=true').'">'.__( 'Account Details' ).'</a>';
+					$account_details = '<a href="'.$this->mainUrl('&account_details=true').'">'.'Account Details'.'</a>';
 					array_unshift($links, $account_details);
 				}
 			}
@@ -247,7 +250,7 @@ class MCWPAdmin {
 		$bvnonce = wp_create_nonce("bvnonce");
 		$public = MCAccount::getApiPublicKey($this->settings);
 		$secret = MCRecover::defaultSecret($this->settings);
-		$server_ip = isset($_SERVER["SERVER_ADDR"]) ? sanitize_text_field(wp_unslash($_SERVER["SERVER_ADDR"])) : null;
+		$server_ip = MCHelper::getStringParamEscaped('SERVER', 'SERVER_ADDR', 'attr');
 		$tags = "<input type='hidden' name='url' value='".esc_attr($this->siteinfo->wpurl())."'/>\n".
 				"<input type='hidden' name='homeurl' value='".esc_attr($this->siteinfo->homeurl())."'/>\n".
 				"<input type='hidden' name='siteurl' value='".esc_attr($this->siteinfo->siteurl())."'/>\n".
@@ -255,7 +258,7 @@ class MCWPAdmin {
 				"<input type='hidden' name='plug' value='".esc_attr($this->bvinfo->plugname)."'/>\n".
 				"<input type='hidden' name='adminurl' value='".esc_attr($this->mainUrl())."'/>\n".
 				"<input type='hidden' name='bvversion' value='".esc_attr($this->bvinfo->version)."'/>\n".
-				"<input type='hidden' name='serverip' value='".esc_attr($server_ip)."'/>\n".
+				"<input type='hidden' name='serverip' value='".$server_ip."'/>\n".
 				"<input type='hidden' name='abspath' value='".esc_attr(ABSPATH)."'/>\n".
 				"<input type='hidden' name='secret' value='".esc_attr($secret)."'/>\n".
 				"<input type='hidden' name='public' value='".esc_attr($public)."'/>\n".
@@ -288,12 +291,14 @@ class MCWPAdmin {
 	}
 
 	public function adminPage() {
-		$bvnonce = isset($_REQUEST['bvnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['bvnonce'])) : '';
+		$bvnonce = MCHelper::getRawParam('REQUEST', 'bvnonce');
 		if ($bvnonce && wp_verify_nonce($bvnonce, 'bvnonce')) {
 			$info = array();
 			$this->siteinfo->basic($info);
-			if (!empty($_REQUEST['pubkey'])) {
-				$pubkey = MCAccount::sanitizeKey(wp_unslash($_REQUEST['pubkey'])); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+			$pubkey = MCHelper::getRawParam('REQUEST', 'pubkey');
+			if (!empty($pubkey)) {
+				$pubkey = MCAccount::sanitizeKey($pubkey);
 				$this->bvapi->pingbv('/bvapi/disconnect', $info, $pubkey);
 				MCAccount::remove($this->settings, $pubkey);
 			}
