@@ -11,7 +11,7 @@ if (!class_exists('MCInfo')) :
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
 		public $wp_lp_whitelabel_option = 'mcLpWhitelabelConf';
-		public $version = '5.91';
+		public $version = '5.92';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';
@@ -92,21 +92,6 @@ if (!class_exists('MCInfo')) :
 			return BV_REQUEST_ID;
 		}
 
-		public function canSetCWBranding() {
-			if (MCWPSiteInfo::isCWServer()) {
-
-				$bot_protect_accounts = MCAccount::accountsByType($this->settings, 'botprotect');
-				if (sizeof($bot_protect_accounts) >= 1)
-					return true;
-
-				$bot_protect_accounts = MCAccount::accountsByPattern($this->settings, 'email', '/@cw_user\.com$/');
-				if (sizeof($bot_protect_accounts) >= 1)
-					return true;
-			}
-
-			return false;
-		}
-
 		public function canWhiteLabel($slug = NULL) {
 			// phpcs:disable WordPress.Security.NonceVerification.Recommended
 			if (array_key_exists("bv_override_global_whitelabel", $_REQUEST)) {
@@ -162,11 +147,6 @@ if (!class_exists('MCInfo')) :
 			if (is_array($brand) && array_key_exists('menuname', $brand)) {
 				return $brand['menuname'];
 			}
-		  $bvinfo = new MCInfo($this->settings);
-if ($bvinfo->canSetCWBranding()) {
-				return "Cloudways";
-			}
-
 			return $this->brandname;
 		}
 

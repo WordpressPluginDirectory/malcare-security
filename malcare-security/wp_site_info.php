@@ -90,10 +90,6 @@ class MCWPSiteInfo {
 			return substr($sig, 0, 6);
 	}
 
-	public static function isCWServer() {
-		return isset($_SERVER['cw_allowed_ip']);
-	}
-
 	public static function isWSKHosted() {
 		$server_addr = MCHelper::getRawParam('SERVER', 'SERVER_ADDR');
 		if (isset($server_addr) && function_exists('gethostbyaddr')) {
