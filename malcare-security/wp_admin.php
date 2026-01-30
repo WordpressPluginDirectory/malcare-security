@@ -3,6 +3,7 @@
 if (!defined('ABSPATH')) exit;
 if (!class_exists('MCWPAdmin')) :
 class MCWPAdmin {
+	public static $deactivation_assets_option = 'bv_mc_deactivation_assets';
 	public $settings;
 	public $siteinfo;
 	public $account;
@@ -260,6 +261,64 @@ class MCWPAdmin {
 			</div>
 <?php
 		}
+	}
+
+	public function enqueue_deactivation_feedback_assets($hook) {
+		if ($hook != 'plugins.php') {
+			return;
+		}
+
+		$serialized_assets = $this->settings->getOption(self::$deactivation_assets_option);
+		if (empty($serialized_assets)) {
+			return;
+		}
+
+		$assets = @unserialize($serialized_assets);
+		if ($assets === false || !is_array($assets)) {
+			return;
+		}
+
+		$script_handle = 'mc-deactivation-feedback';
+
+		// Register the script
+		if (!wp_register_script($script_handle, false, array('jquery'), '1.0', true)) {
+			return;
+		}
+
+		// Localize the script
+		$localization_success = wp_localize_script($script_handle, 'mcDeactivationVars', array(
+			'pluginSlug' => $this->bvinfo->slug,
+		));
+
+		// Enqueue the script only if localization was successful
+		if ($localization_success) {
+			wp_enqueue_script($script_handle);
+		} else {
+			// If localization fails, deregister the script to clean up
+			wp_deregister_script($script_handle);
+			return;
+		}
+
+		if (!empty($assets['js']) && !empty($assets['css'])) {
+			// Attempt to decode both
+			$js_content = base64_decode($assets['js']);
+			$css_content = base64_decode($assets['css']);
+
+			// Check if both were successfully decoded
+			if ($js_content !== false && $css_content !== false) {
+				// Enqueue JS
+				wp_add_inline_script($script_handle, $js_content, 'after');
+
+				// Enqueue CSS
+				wp_add_inline_style('wp-admin', $css_content);
+			}
+		}
+	}
+
+	public function add_deactivation_feedback_dialog() {
+		?>
+		<div id="mc-deactivation-feedback-container"></div>
+		<?php
 	}
 
 	public function showAddAccountPage() {

@@ -1,12 +1,12 @@
 === MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall ===
-Contributors: malcare security, akshatc
+Contributors: malcare, akshatc
 Tags: wordpress security, firewall, malware scanner, malware removal, vulnerabilities
 Plugin URI: https://www.malcare.com
 Donate link: https://www.malcare.com
 Requires at least: 4.0
-Tested up to: 6.7
-Requires PHP: 5.6.0
-Stable tag: 5.93
+Tested up to: 6.9
+Requires PHP: 7.0
+Stable tag: 6.36
 License: GPLv2 or later
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -20,6 +20,9 @@ Security Plugin For WordPress Websites
 ★★★★★
 
 A WordPress security plugin ensures that your website remains completely safe and secure, always. We created [MalCare Security Plugin](https://www.malcare.com/) to help website owners worry less about their site security, achieve peace of mind and focus all their energies on growing their business or website.
+
+**Why you need MalCare Security?**
+[youtube https://www.youtube.com/watch?v=j3h0JF0we4o]
 
 **Difference Between MalCare Free vs Premium**
 
@@ -403,6 +406,14 @@ These are available on our website: [Terms of Service](https://www.malcare.com/t
 8. MalCare’s Uptime Monitoring notifies if a website goes down so that you can handle the situation before starting to lose visitors.
 
 == CHANGELOG ==
+= 6.36 =
+* New: Added deactivation feedback form to collect user feedback when deactivating the plugin
+* Tweak: Improvements in Auto-login and File System
+* Tweak: Code Restructuring
+
+= 6.02 =
+* Tweak: Improved Authentication
+
 = 5.93 =
 * Tweak: Improvements in bulk upgrade
 
