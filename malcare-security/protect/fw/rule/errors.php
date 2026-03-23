@@ -1,8 +1,8 @@
 <?php
 if (!defined('ABSPATH') && !defined('MCDATAPATH')) exit;
 
-if (!class_exists('MCProtectRuleError_V636')) :
-class MCProtectRuleError_V636 extends Exception {
+if (!class_exists('MCProtectRuleError_V639')) :
+class MCProtectRuleError_V639 extends Exception {
 //Root rule error class.
 }
 endif;

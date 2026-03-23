@@ -1,11 +1,11 @@
 <?php
 
 if (!defined('ABSPATH')) exit;
-if (!class_exists('BVActLogCallback')) :
+if (!class_exists('MCActLogCallback')) :
 	
 require_once dirname( __FILE__ ) . '/../../wp_actlog.php';
 
-class BVActLogCallback extends BVCallbackBase {
+class MCActLogCallback extends MCCallbackBase {
 	public $db;
 	public $settings;
 

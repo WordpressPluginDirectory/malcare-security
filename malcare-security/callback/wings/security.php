@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) exit;
-if (!class_exists('BVSecurityCallback')) :
-	class BVSecurityCallback extends BVCallbackBase {
+if (!class_exists('MCSecurityCallback')) :
+	class MCSecurityCallback extends MCCallbackBase {
 		private $settings;
 
 		public function __construct() {

@@ -5,7 +5,7 @@ Plugin URI: https://www.malcare.com
 Description: MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall
 Author: MalCare Security
 Author URI: https://www.malcare.com
-Version: 6.36
+Version: 6.39
 Network: True
 License: GPLv2 or later
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
@@ -139,8 +139,8 @@ if (MCHelper::getRawParam('REQUEST', 'bvplugname') == "malcare") {
 		$account = MCAccount::find($bvsettings, $pubkey);
 	}
 
-	$request = new BVCallbackRequest($account, $_REQUEST, $bvsettings); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$response = new BVCallbackResponse($request->bvb64cksize);
+	$request = new MCCallbackRequest($account, $_REQUEST, $bvsettings); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$response = new MCCallbackResponse($request->bvb64cksize);
 
 	if ($request->authenticate() === 1) {
 		$bv_frm_tstng = MCHelper::getRawParam('REQUEST', 'bv_frm_tstng');
@@ -160,7 +160,7 @@ if (MCHelper::getRawParam('REQUEST', 'bvplugname') == "malcare") {
 				$response->terminate($request->corruptedParamsResp());
 			}
 			$request->params = $params;
-			$callback_handler = new BVCallbackHandler($bvdb, $bvsettings, $bvsiteinfo, $request, $account, $response);
+			$callback_handler = new MCCallbackHandler($bvdb, $bvsettings, $bvsiteinfo, $request, $account, $response);
 			if ($request->is_afterload) {
 				add_action('wp_loaded', array($callback_handler, 'execute'));
 			} else if ($request->is_admin_ajax) {
@@ -178,14 +178,14 @@ if (MCHelper::getRawParam('REQUEST', 'bvplugname') == "malcare") {
 		if ($bvinfo->isProtectModuleEnabled()) {
 			require_once dirname( __FILE__ ) . '/protect/protect.php';
 			//For backward compatibility.
-			MCProtect_V636::$settings = new MCWPSettings();
-			MCProtect_V636::$db = new MCWPDb();
-			MCProtect_V636::$info = new MCInfo(MCProtect_V636::$settings);
+			MCProtect_V639::$settings = new MCWPSettings();
+			MCProtect_V639::$db = new MCWPDb();
+			MCProtect_V639::$info = new MCInfo(MCProtect_V639::$settings);
 
-			add_action('mc_clear_pt_config', array('MCProtect_V636', 'uninstall'));
+			add_action('mc_clear_pt_config', array('MCProtect_V639', 'uninstall'));
 
 			if ($bvinfo->isActivePlugin()) {
-				MCProtect_V636::init(MCProtect_V636::MODE_WP);
+				MCProtect_V639::init(MCProtect_V639::MODE_WP);
 			}
 		}
 

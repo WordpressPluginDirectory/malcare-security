@@ -16,7 +16,10 @@
 				<input type="text" placeholder="Enter your email address to continue" id="email" name="email" class="d-inline search" required>
 				<h5 class="check-box-text"><input type="checkbox" class="check-box" name="consent" value="1" required>
 				<label>I agree to <?php echo esc_html($brand_name); ?> <a href="<?php echo esc_url($webpage.'/tos'); ?>" target="_blank" rel="noopener noreferrer">Terms of Service</a> and <a href="<?php echo esc_url($webpage.'/privacy'); ?>" target="_blank" rel="noopener noreferrer">Privacy Policy</a></label></h5>
-				<button id="get-started" type="submit" class="e-mail-button"><span class="text-white">Submit</span></button>		
+				<button id="get-started" type="submit" class="e-mail-button"><span class="text-white">Submit</span></button>
+				<div style="margin-top: 12px;">
+					<a href="#" id="mc-show-connection-key-link" style="text-decoration: underline;">Connection key</a>
+				</div>
 			</form>
 		</div>
 	</div>

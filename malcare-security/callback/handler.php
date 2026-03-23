@@ -1,9 +1,9 @@
 <?php
 
 if (!defined('ABSPATH')) exit;
-if (!class_exists('BVCallbackHandler')) :
+if (!class_exists('MCCallbackHandler')) :
 
-	class BVCallbackHandler {
+	class MCCallbackHandler {
 		public $db;
 		public $settings;
 		public $siteinfo;
@@ -51,63 +51,63 @@ if (!class_exists('BVCallbackHandler')) :
 			switch ($this->request->wing) {
 			case 'manage':
 				require_once dirname( __FILE__ ) . '/wings/manage.php';
-				$module = new BVManageCallback($this);
+				$module = new MCManageCallback($this);
 				break;
 			case 'fs':
 				require_once dirname( __FILE__ ) . '/wings/fs.php';
-				$module = new BVFSCallback($this);
+				$module = new MCFSCallback($this);
 				break;
 			case 'db':
 				require_once dirname( __FILE__ ) . '/wings/db.php';
-				$module = new BVDBCallback($this);
+				$module = new MCDBCallback($this);
 				break;
 			case 'info':
 				require_once dirname( __FILE__ ) . '/wings/info.php';
-				$module = new BVInfoCallback($this);
+				$module = new MCInfoCallback($this);
 				break;
 			case 'dynsync':
 				require_once dirname( __FILE__ ) . '/wings/dynsync.php';
-				$module = new BVDynSyncCallback($this);
+				$module = new MCDynSyncCallback($this);
 				break;
 			case 'ipstr':
 				require_once dirname( __FILE__ ) . '/wings/ipstore.php';
-				$module = new BVIPStoreCallback($this);
+				$module = new MCIPStoreCallback($this);
 				break;
 			case 'wtch':
 				require_once dirname( __FILE__ ) . '/wings/watch.php';
-				$module = new BVWatchCallback($this);
+				$module = new MCWatchCallback($this);
 				break;
 			case 'brand':
 				require_once dirname( __FILE__ ) . '/wings/brand.php';
-				$module = new BVBrandCallback($this);
+				$module = new MCBrandCallback($this);
 				break;
 			case 'pt':
 				require_once dirname( __FILE__ ) . '/wings/protect.php';
-				$module = new BVProtectCallback($this);
+				$module = new MCProtectCallback($this);
 				break;
 			case 'act':
 				require_once dirname( __FILE__ ) . '/wings/account.php';
-				$module = new BVAccountCallback($this);
+				$module = new MCAccountCallback($this);
 				break;
 			case 'fswrt':
 				require_once dirname( __FILE__ ) . '/wings/fs_write.php';
-				$module = new BVFSWriteCallback();
+				$module = new MCFSWriteCallback();
 				break;
 			case 'actlg':
 				require_once dirname( __FILE__ ) . '/wings/actlog.php';
-				$module = new BVActLogCallback($this);
+				$module = new MCActLogCallback($this);
 				break;
 			case 'speed':
 				require_once dirname( __FILE__ ) . '/wings/speed.php';
-				$module = new BVSpeedCallback($this);
+				$module = new MCSpeedCallback($this);
 				break;
 			case 'scrty':
 				require_once dirname( __FILE__ ) . '/wings/security.php';
-				$module = new BVSecurityCallback($this);
+				$module = new MCSecurityCallback($this);
 				break;
 			default:
 				require_once dirname( __FILE__ ) . '/wings/misc.php';
-				$module = new BVMiscCallback($this);
+				$module = new MCMiscCallback($this);
 				break;
 			}
 			$resp = $module->process($this->request);

@@ -1,10 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-if (!class_exists('BVProtectCallback')) :
+if (!class_exists('MCProtectCallback')) :
 require_once dirname( __FILE__ ) . '/../../protect/lp.php';
 
-class BVProtectCallback extends BVCallbackBase {
+class MCProtectCallback extends MCCallbackBase {
 	public $db;
 	public $settings;
 
@@ -40,7 +40,7 @@ class BVProtectCallback extends BVCallbackBase {
 	}
 
 	public function unBlockIP($ip, $attempts, $time) {
-		$transient_name = MCProtectLP_V636::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
+		$transient_name = MCProtectLP_V639::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
 		$this->settings->setTransient($transient_name, $attempts, $time);
 		return $this->settings->getTransient($transient_name);
 	}

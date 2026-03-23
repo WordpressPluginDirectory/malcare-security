@@ -11,7 +11,7 @@ if (!class_exists('MCInfo')) :
 		public $ip_header_option = 'mcipheader';
 		public $brand_option = 'bv_whitelabel_infos';
 		public $wp_lp_whitelabel_option = 'mcLpWhitelabelConf';
-		public $version = '6.36';
+		public $version = '6.39';
 		public $webpage = 'https://www.malcare.com';
 		public $appurl = 'https://app.malcare.com';
 		public $slug = 'malcare-security/malcare.php';
@@ -86,10 +86,10 @@ if (!class_exists('MCInfo')) :
 		}
 
 		public static function getRequestID() {
-			if (!defined("BV_REQUEST_ID")) {
-				define("BV_REQUEST_ID", uniqid(mt_rand())); // phpcs:ignore WordPress.WP.AlternativeFunctions.rand_mt_rand
+			if (!defined("MC_REQUEST_ID")) {
+				define("MC_REQUEST_ID", uniqid(mt_rand())); // phpcs:ignore WordPress.WP.AlternativeFunctions.rand_mt_rand
 			}
-			return BV_REQUEST_ID;
+			return MC_REQUEST_ID;
 		}
 
 		public function canWhiteLabel($slug = NULL) {

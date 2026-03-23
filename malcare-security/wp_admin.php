@@ -112,6 +112,7 @@ class MCWPAdmin {
 				MCHelper::safePregMatch("/bv_account_details$/", $hook)) {
 			wp_enqueue_style('bootstrap', plugins_url('css/bootstrap.min.css', __FILE__), array(), $this->bvinfo->version);
 			wp_enqueue_style('bvplugin', plugins_url('css/bvplugin.min.css', __FILE__), array(), $this->bvinfo->version);
+			wp_enqueue_script('mc-connection-key', plugins_url('js/connection-key.js', __FILE__), array(), $this->bvinfo->version, true);
 		}
 	}
 
@@ -273,7 +274,7 @@ class MCWPAdmin {
 			return;
 		}
 
-		$assets = @unserialize($serialized_assets);
+		$assets = maybe_unserialize($serialized_assets);
 		if ($assets === false || !is_array($assets)) {
 			return;
 		}
