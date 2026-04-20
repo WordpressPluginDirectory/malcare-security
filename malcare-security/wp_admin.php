@@ -123,7 +123,9 @@ class MCWPAdmin {
 			array($this, 'showAccountDetailsPage'));
 
 		$brand = $this->bvinfo->getPluginWhitelabelInfo();
-		if (!is_array($brand) || (!array_key_exists('hide', $brand) && !array_key_exists('hide_from_menu', $brand))) {
+		$can_whitelabel = $this->bvinfo->canWhiteLabel();
+		$hide_from_menu = is_array($brand) && (array_key_exists('hide', $brand) || array_key_exists('hide_from_menu', $brand));
+		if (!$can_whitelabel || !$hide_from_menu) {
 			$bname = $this->bvinfo->getBrandName();
 			$icon = $this->bvinfo->getBrandIcon();
 
