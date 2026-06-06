@@ -1,4 +1,4 @@
-=== MalCare WordPress Security Plugin - Firewall, Malware Scanner & Login Protection ===
+=== MalCare WordPress Security Plugin - Malware Scanner, Cleaner, Security Firewall ===
 Contributors: malcare, akshatc
 Tags: wordpress security, firewall, malware scanner, malware removal, vulnerabilities
 Plugin URI: https://www.malcare.com
@@ -6,7 +6,7 @@ Donate link: https://www.malcare.com
 Requires at least: 4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.47
+Stable tag: 6.48
 License: GPLv2 or later
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -14,93 +14,108 @@ Get Bulletproof Security for your WordPress site. WordPress security plugin pack
 
 == DESCRIPTION ==
 
-== Complete WordPress Protection, Without Slowing Down Your Site ==
+### MALCARE SECURITY SERVICES
 
-MalCare protects your website with 5 free layers of security - WordPress Firewall, Malware Scanner, Login Protection, and more.
+Security Plugin For WordPress Websites
+★★★★★
 
-All the heavy lifting is done by our own servers, so your website never slows down.
+A WordPress security plugin ensures that your website remains completely safe and secure, always. We created [MalCare Security Plugin](https://www.malcare.com/) to help website owners worry less about their site security, achieve peace of mind and focus all their energies on growing their business or website.
 
-Our team of 50+ dedicated security engineers are building industry-first technologies like Instant Malware Removal, Atomic Security etc.
+**Why you need MalCare Security?**
+[youtube https://www.youtube.com/watch?v=j3h0JF0we4o]
 
-MalCare is trusted by 200,000+ developers and businesses for serious protection - from popular blogs to WordPress agencies and Fortune 500 companies like Intel, eBay, Toshiba and more.
+**Difference Between MalCare Free vs Premium**
 
-https://www.youtube.com/watch?v=JM6uFcdDlX0
+[youtube https://www.youtube.com/watch?v=4ja5ix9WDCo]
 
-== Secure Your Site in 3 steps ==
+**Why MalCare is best WordPress security plugin?**
 
-Most security plugins expect you to understand rules, logs, and configurations to set up security. MalCare does the opposite. No manual tuning. No confusing setup wizard. Just 3 steps to secure your site:
+[youtube https://www.youtube.com/watch?v=vt-0TrMV-TQ]
 
-1. Install & activate the plugin, like you normally do
-2. Add your email to create an account for security alerts
-3. MalCare automatically sets up 5 layers of security (free)
+**MalCare in 1 Minute - Overview**
 
-P.S. Already hacked? Here's our [emergency guide](https://www.malcare.com/blog/wordpress-hacked/)
+[youtube https://www.youtube.com/watch?v=H1XRntW_FeE]
+<br/>
 
-== MalCare's 5 Layers of Security (Free) ==
+**Important Links: [Security Features](https://www.malcare.com/features/) | [Why Choose MalCare?](https://www.malcare.com/) | [Comparisons](https://www.malcare.com/top-wordpress-security-plugins-compared/) | [Free vs Paid](https://www.malcare.com/malcare-free-premium/)**
 
-Once you've installed the plugin, MalCare automatically sets up 5 layers of security (free) that protect your site without limitations. You can upgrade to the paid version for enhanced protection and malware removal.
+MalCare is the **fastest** malware detection and removal plugin loved by thousands of developers and agencies. With an industry-first **automatic one-click malware removal**, your WordPress website is clean before Google blacklists it or your web host takes it down. MalCare has been developed from the ground up after **analyzing over 240,000 websites over 2.5+ years**.
 
-1. **WordPress Firewall** contains 200+ built-in rules for top-tier protection, and new rules are never delayed - our real-time threat network keeps updating your firewall to block the latest attacks.
-2. **Deep Malware Scanner** catches hidden malware that other plugins often miss. It runs 100+ checks, including AI heuristic analysis. All this is powered by offsite servers, so your site never slows down.
-3. **The Vulnerability Scanner** warns you when a plugin or theme puts your site at risk, so you can update or replace it *before* hackers can target it.
-4. **Login Protection** protects your site with brute-force defence, login security and two-factor authentication so weak passwords or bot attack attempts do not turn into break-ins.
-5. **Atomic Security** analyzes your specific site's vulnerable points and applies customised rules to protect against zero-day attacks.
+Its **intelligent scanning methodology** will **never slow down your WordPress site** and **accurately identifies** the most complex malware that typically goes undetected in other popular WordPress security plugins.
 
-== MalCare Premium ==
+The **one-click malware cleaner** offers unlimited automated cleanups while the inbuilt **powerful cloud-based firewall** ensures round-the-clock website protection against spam attacks. Moreover, you can **block countries** to mitigate hack attacks.
 
-The free version protects & detects common threats without any limitations. Upgrade when you need stronger protection for high-value sites and instant malware removal.
+MalCare comes integrated with a **complete website management** module that ensures better WP security and site management to your websites from a single dashboard.
 
-1. **Instant Malware Removal** is the fastest and smartest cleanup in WordPress. It surgically removes malware & backdoors without damaging your site, with a money-back guarantee against reinfections.
-2. **GeoBlocking** blocks traffic from unwanted regions sending attacks, spam or traffic spikes that put extra load on your site.
-3. **Bot Protection** blocks bad bots while allowing good ones like Google, helping reduce spam, cut unnecessary load, and protect key pages from abuse.
-4. **Activity Log** shows exactly what changed on your site, when it changed, and who did it, so you can troubleshoot problems in minutes instead of hours.
-5. **Personal Support** from our dedicated team of 50+ security engineers to help you resolve security issues asap and control any damages.
+The WP security plugin **notifies you if the WordPress site goes down** so that you can handle the situation before you start losing visitors. Performance Check enables WordPress users to keep an eye on their **loading speed**.
 
-== Security That Adapts to Your Site ==
+MalCare offers a premium **White-Label** solution that lets agencies provide better website security to their clients without risking their business. And enables users to **generate beautiful reports** for their clients.
 
-Our dedicated team of 50+ engineers continuously release improvements so MalCare can protect the widest range of WordPress sites.
+== Why Choose MalCare WordPress Security Plugin? ==
 
-During installation, MalCare analyzes your website and automatically applies one of 100+ custom configurations. It is often the only security plugin relied on by:
+* #### WordPress Malware Scanner
+	* Cloud Based Deep malware scanner
+	* Doesn’t Slow down your WordPress site
+	* Detects malware BEFORE it’s too late
+	* NO impact on your website
+	* Finds ALL types of malware, even new & complex ones
+	* Get Alerts about Security Risks with our WordPress Vulnerability Scanner
 
-1. Portfolios and Media Sites
-2. Startups and Small Businesses
-3. Ecommerce stores
-4. Developers and Agencies
-5. Fortune 500 Enterprises
-6. Government bodies and NGOs
+* #### WordPress Malware Removal
+	* View hacked file details
+	* Cleans your site INSTANTLY, in less than 60 Secs
+	* Removes ALL traces of malware
+	* UNLIMITED hack cleanups
 
-We've built unique features to deliver more personalized protection - like [Atomic Security](https://www.malcare.com/blog/introducing-atomic-security/), which analyses each WordPress site and creates custom rules for protection against new vulnerability exploits, called "zero-day protection".
+* #### WordPress Website Protection
+	* Blocks hacker BOTS from attacking login page
+	* Identifies & blocks MALICIOUS traffic
+	* Enables users to HARDEN their WordPress sites
+	* Enables users to block ENTIRE countries
 
-== Why people install MalCare ==
+* #### Easy to Use
+	* Set up an account in 60 secs
+	* Configure security once & never look at it again
 
-We believe security is only useful when it helps you focus on real problems: hidden malware, vulnerable plugins and themes, brute-force attempts, dangerous bot traffic, and important site changes. You get clear alerts you can act on instead of a dashboard full of panic-inducing false positives. The 4 main reasons people install MalCare are:
+* #### Support
+	* Agile & responsive customer support
 
-* They want the best WordPress protection without slowing down their site
-* They want real alerts, not constant noise.
-* They want one dashboard for security, instead of a patchwork of plugins
-* They want a fast and guaranteed recovery path when a site is hacked.
+== Why Is MalCare Such a Game-Changer? ==
 
-== Manage security across multiple websites ==
+MalCare offers unparalleled security services. Some services are free and others are paid.
 
-MalCare helps you avoid scattered logins, fragmented alerts, and plugin-by-plugin chaos. Add sites to your central dashboard, monitor security from one place, and keep protection consistent across client sites, business properties, and growing portfolios.
+#### MalCare’s FREE Services -
 
-Government bodies, NGOs and companies managing 5-10 sites can easily add multiple sites to our central dashboard after plugin installation. For any queries, [contact here](https://app.malcare.com/contact/?src=nocard).
+1. #### Cloud-Based Malware Scanning (Free)
+	MalCare’s Cloud-based Scanning ensures no impact on your website ever. Moreover, it detects Complex Malware missed by other popular security plugins for WordPress.
 
-Developers and Agencies who need help with bulk-importing sites and additional features like backups, bulk updates etc can [contact us here](https://app.malcare.com/contact/?src=nocard).
+2. #### Web-Application WordPress Firewall (Free)
+	Get Real-Time Protection for your WordPress website against the latest security threats with MalCare's Smart Firewall. Block hackers & bots before they harm your site.
 
-== When your site is hacked, speed matters ==
+3. #### CAPTCHA-Based Login Page Protection (Free)
+	Automatically prevent brute force attacks with MalCare’s Smart Captcha-Based Login Page Protection. Round-the-clock protection against malicious traffic.
 
-The longer malware stays on your site, the more damage it can do to SEO, ads, uptime, and customer trust. MalCare Premium helps you move fast with instant malware removal, support for blacklist and host suspension issues, and protection against reinfection.
+#### MalCare’s PAID Services -
 
-Every day, 10,000+ hacked sites buy MalCare Premium to instantly cleanup, repair and protect their website from the widest range of threats, like:
+1. #### Viewing Hacked Files (Paid)
+	View the infected files present on your WordPress website. Learn which themes or plugins or files or folders were infected by hackers.
 
-* Spammy redirects or strange popups
-* Japanese keyword pages, SEO spam, or sudden traffic drops
-* Login attacks and brute force attempts
-* Malware warnings, host suspensions, or blacklist issues
-* Hidden malware and backdoors that basic scanners miss
+2. #### Industry-First Instant Malware Removal (Paid)
+	Clean your hacked site instantly in less than 60 secs with MalCare’s 1-Click Cleaner. Clean your website before Google blacklists it or your web host takes it down.
 
-However, for your peace of mind, we also provide 100% moneyback-guarantee for any failed cleanups. Here's a list of attacks MalCare can clean in less than 3 minutes
+3. #### WordPress Recommended Website Hardening (Paid)
+	Easily configure WordPress recommended best security practices with just 1-Click from right within MalCare’s dashboard. No technical knowledge needed.
+
+4. #### Geo-blocking (Paid)
+	Restrict access to users based on their geographical location. Easily block all visitors from certain countries to mitigate the risk of being hacked.
+
+5. #### Uptime Monitoring (Paid)
+	With MalCare's Uptime Monitoring keep a steady eye on your WordPress site. It ensures that you are not oblivious to website downtime.
+
+
+== Common Hack Attacks Prevented By MalCare ==
+
+MalCare protects websites against all common hack attacks which includes:
 
 * [Brute force attacks](https://www.malcare.com/blog/wordpress-brute-force/)
 * [Japanese keyword hack](https://www.malcare.com/blog/japanese-keyword-hack/)
@@ -126,25 +141,134 @@ However, for your peace of mind, we also provide 100% moneyback-guarantee for an
 * [Coinhive hack](https://www.malcare.com/blog/coinhive-malware-wordpress/)
 * [WordPress deface hack](https://www.malcare.com/blog/deface-wordpress/)
 
-== WordPress Experts Love MalCare! ==
+== MalCare Free vs. MalCare Premium ==
+
+1. #### Cloud Based Malware Scanner (FREE)
+	* Cloud-Based Malware Scanning **(Free)**
+	* Deep Malware Scanning - Files & Database **(Free)**
+
+2. #### Website Firewall (FREE)
+	* Web Application Firewall **(Free)**
+	* Plugin Based Firewall **(Free)**
+	* Rules update every 7 days **(Free)**
+	* Login Page Protection **(Free)**
+	* Bot Protection **(Free)**
+	* Rules update every 5 mins **(Paid)**
+	* Geo-Blocking **(Paid)**
+	* Website Hardening **(Paid)**
+
+3. #### Instant Malware Removal (PAID)
+	* View Malware Insights **(Paid)**
+	* Instant One-Click Clean Ups **(Paid)**
+	* Automatic Clean-Ups **(Paid)**
+	* Unlimited Clean-Ups **(Paid)**
+
+4. #### Personalized Customer Support (Paid)
+	* Support on WordPress forum **(Free)**
+	* Support via email and chat **(Paid)**
+
+== Who Can Benefit From MalCare? ==
+
+MalCare is perfect for:
+
+* Any WordPress Websites
+* Small Business Websites
+* Developer Websites
+* Web Designing Websites
+* eCommerce Stores
+* Niche Sites
+* Artists & Photographers Sites
+* Amateur & Professional Bloggers
+* Local Business Sites
+* Website for Startups
+* Websites Selling Courses
+* Influencer Sites
+* Web Hosting Companies
+* Website Maintenance Services or Agencies
+
+== Detailed Setup Step-by-Step Tutorials ==
+
+This WordPress security plugin works in tandem with the [MalCare](https://www.malcare.com) servers. MalCare servers do all the heavy processing and will alert you if your site has any security issues.
+
+Hence a MalCare account is needed to use the plugin. This account can also be used by our other products including [BlogVault](https://blogvault.net).
+
+* [How to Set Up a MalCare Account?](https://malcare.freshdesk.com/support/solutions/articles/35000055512-how-do-i-set-up-a-malcare-account-) (Help Doc)
+* [How to Set Up a MalCare Account?](https://www.youtube.com/watch?v=v8L_DZllk7k&list=) (Video)
+
+== MalCare Full Security Features List ==
+
+* #### Cloud Based Malware Scanner
+	* Daily Scan Frequency
+	* On-demand Site Scans
+	* Scan Non-WP Files
+	* Does not slow down your website ever
+
+* #### Instant Malware Removal
+	* View Hacked Files details
+	* Instant Automatic Malware Removal
+	* Removal of Unknown & New Malware
+	* Unlimited Malware Removal
+
+* #### Intelligent Malware Protection
+	* Web Application Firewall
+	* IP Whitelisting
+	* CAPTCHA-based Login Page Protection
+	* Traffic Logs
+	* Login Logs
+	* Geo-Blocking
+	* Alerts for Suspicious Logins
+
+* #### Website Hardening
+	* Block PHP Execution in Untrusted Folders
+	* Disable Files Editor
+	* Block Plugin or Theme Installation
+	* Change Security Keys
+	* Reset All Passwords
+
+* #### Complete Website Management
+	* Centralized Dashboard
+	* Plugins & Themes Management & Update
+	* User Management
+	* Team Management
+	* Client Management
+	* Generate & Schedule Reports
+	* White-Labeling Solution
+	* Uptime Monitoring
+	* Site Speed Monitoring
+	* Blacklist Alarm
+	* Slack Integration
+
+* #### Support
+	* Email
+	* Chat
+	* Social Media
+
+== Fans Are Raving About Us ==
 
 * [MalCare Review on VisualComposer](https://visualcomposer.com/blog/malcare-review/)
 * [MalCare Review on ElegantThemes](https://www.elegantthemes.com/blog/resources/malcare-security-and-firewall-the-right-security-plugin-for-your-site)
 * [MalCare Review on Weglot](https://blog.weglot.com/ideal-security-solution-malcare-review/)
 * [MalCare Review on WPWhiteSecurity](https://www.wpwhitesecurity.com/malcare-wordpress-site-security-service-reviewed/)
-* [MalCare Reviews by Adam Preiser (Plus Real Malware Removal Demo)](https://www.youtube.com/watch?v=2yNIb4Pc_ig)
+* [MalCare Reviews by WordPress Influencer Adam Preiser (Plus Real Malware Removal Demo)](https://www.youtube.com/watch?v=2yNIb4Pc_ig)
 
-== About The MalCare Team ==
+== Connect With Our Team of Security Experts ==
 
-We are a team of 50+ security engineers committed to providing the most reliable protection for your website. We release improvements every two weeks/month and keep pushing the envelope with new technologies like our real-time firewall, atomic security and more to proactively prevent security issues.
+[Join MalCare's Facebook Community](https://www.facebook.com/groups/WordPressForWebCreators/) - The purpose of the group is to enable Web Creators to gain valuable insights and help from community members which will be valuable to their business. So, if you are a WordPress user & want to keep up with the latest industry news and get help for your business, [join us](https://www.facebook.com/groups/WordPressForWebCreators/)!
 
-Our company has a proven track record of 12+ years in WordPress and in 2025 alone, we've helped 1.5M+ sites and 30,000+ agencies with our flagship products, including MalCare, BlogVault, MigrateGuru, and WPRemote
+== Don’t Know Where to Getting Started? Start From Here - ==
 
-== Contact Us ==
+* [How to Setup MalCare Account?](https://malcare.freshdesk.com/support/solutions/articles/35000055512-how-do-i-set-up-a-malcare-account-)
+* [Join MalCare Facebook Group MalCare](https://www.facebook.com/groups/WordPressForWebCreators/)
+* [MalCare Tutorial Videos](https://www.youtube.com/channel/UC5oQAXXvndQJuyVrWgMRWqg)
+* [User Help Documentations](https://malcare.freshdesk.com/support/home)
+* [Frequently Asked Questions](https://www.malcare.com/faq/)
+* [Support for MalCare Users](https://malcare.freshdesk.com/support/tickets/new)
 
-1. [Emergency guide for hacked sites](https://www.malcare.com/blog/wordpress-hacked/)
-2. [Request a feature/report a bug](https://app.malcare.com/contact/?src=nocard)
-3. [Find out more about us](https://www.malcare.com/about/)
+
+== MalCare vs. Others ==
+
+* [MalCare vs Sucuri vs Wordfence by CodeinWP](https://www.codeinwp.com/blog/sucuri-vs-wordfence-vs-malcare/)
+* [MalCare vs Sucuri vs Wordfence vs SiteLock vs iThemes Security by WPMayor](https://wpmayor.com/malcare-sucuri-wordfence-sitelock-ithemes-security-comparison/)
 
 == SCREENSHOTS  ==
 
@@ -278,6 +402,10 @@ FTP details input into MalCare is processed on our servers. We need your FTP cre
 These are available on our website: [Terms of Service](https://www.malcare.com/tos/) and [Privacy Policy](https://www.malcare.com/privacy/)
 
 == CHANGELOG ==
+= 6.48 =
+* Fix: Preserve default PHP error handling after PHP Error Monitoring processes an error.
+* Tweak: Reduce repeated firewall IP whitelist lookups.
+
 = 6.47 =
 * Fix: Prevent stale WordPress core update cleanup rules from deleting files added by newer WordPress core packages.
 

@@ -40,7 +40,7 @@ class MCProtectCallback extends MCCallbackBase {
 	}
 
 	public function unBlockIP($ip, $attempts, $time) {
-		$transient_name = MCProtectLP_V647::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
+		$transient_name = MCProtectLP_V648::UNBLOCK_IP_TRANSIENT_PREFIX . $ip;
 		$this->settings->setTransient($transient_name, $attempts, $time);
 		return $this->settings->getTransient($transient_name);
 	}
