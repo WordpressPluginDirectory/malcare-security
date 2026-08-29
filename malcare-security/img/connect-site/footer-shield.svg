@@ -1,0 +1,21 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="109" height="106" viewBox="0 0 109 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<rect width="109" height="106" rx="53" fill="url(#paint0_radial_0_412)"/>
+<path id="Ellipse 1" d="M109 53C109 82.2711 84.5995 106 54.5 106C24.4005 106 0 82.2711 0 53C0 23.7289 24.4005 0 54.5 0C84.5995 0 109 23.7289 109 53ZM0.837307 53C0.837307 81.8214 24.8629 105.186 54.5 105.186C84.1371 105.186 108.163 81.8214 108.163 53C108.163 24.1786 84.1371 0.814262 54.5 0.814262C24.8629 0.814262 0.837307 24.1786 0.837307 53Z" fill="white" fill-opacity="0.2"/>
+<path id="Vector" d="M55 12L95 26V60C95 80 78 96 55 105C32 96 15 80 15 60V26L55 12Z" fill="url(#paint1_linear_0_412)" stroke="#7F1D1D"/>
+<path id="Vector_2" d="M55 36L73 66H37L55 36Z" fill="white"/>
+<rect id="Rectangle" x="53" y="48" width="4" height="11" rx="2" fill="#DC2626"/>
+<circle id="Ellipse" cx="55" cy="62" r="1.5" fill="#DC2626"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_0_412" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(54.5 53) scale(54.5 53)">
+<stop stop-color="#EF4444" stop-opacity="0.4"/>
+<stop offset="1" stop-color="#7F1D27" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="paint1_linear_0_412" x1="55" y1="12" x2="55" y2="105" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FCA5A5"/>
+<stop offset="0.55" stop-color="#EF4444"/>
+<stop offset="1" stop-color="#7F1D27"/>
+</linearGradient>
+</defs>
+</svg>

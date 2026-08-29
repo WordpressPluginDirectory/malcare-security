@@ -22,6 +22,7 @@ class MCWPCli {
 		$request_params = array_merge($this->siteinfo->info(), $this->bvinfo->info());
 		$request_params['bvpublic'] = MCAccount::getApiPublicKey($this->settings);
 		$request_params['bvsecret'] = MCRecover::defaultSecret($this->settings);
+		$request_params['bvctag'] = MCRecover::connectionTag($this->settings);
 		$url = $this->bvinfo->appUrl()."/api/v3/accounts/".$params['account_id']."/sites";
 		foreach (preg_grep('#site_id|email|password|wp_cli_command|is_staging_env#i', array_keys($params)) as $key ) {
 			$request_params[$key] = $params[$key];
@@ -157,6 +158,68 @@ class MCWPCli {
 				}
 			} else {
 				WP_CLI::error("Invalid Response. Please retry or contact us.");
+			}
+		}
+	}
+	public function setkey($args, $params) {
+		// Support for encoded key
+		if (isset($params['key'])) {
+			$decoded = base64_decode($params['key']);
+			$parts = explode(':', $decoded, 3);
+			if (count($parts) === 3) {
+				if ($parts[0] !== 'v1') {
+					WP_CLI::error('Key version incompatible or invalid key format.');
+				}
+				if ($parts[1] !== '' && $parts[2] !== '') {
+					$pubkey = $parts[1];
+					$secret = $parts[2];
+
+					if (strlen($pubkey) < 32 || strlen($secret) < 32) {
+						WP_CLI::error('Please enter valid key.');
+					}
+					MCAccount::addAccount($this->settings, $pubkey, $secret);
+					MCAccount::updateApiPublicKey($this->settings, $pubkey);
+					if (MCAccount::exists($this->settings, $pubkey)) {
+						WP_CLI::success('Key Setup Successfully.');
+					} else {
+						WP_CLI::error('Key Setup Failed.');
+					}
+				} else {
+					WP_CLI::error('Invalid key format.');
+				}
+			} else {
+				WP_CLI::error('Invalid key format.');
+			}
+		}
+	}
+
+	public function removekey($args, $params) {
+		// Support for encoded key (same format as setkey: base64(v1:pubkey:secret))
+		if (isset($params['key'])) {
+			$decoded = base64_decode($params['key']);
+			$parts = explode(':', $decoded, 3);
+			if (count($parts) === 3) {
+				if ($parts[0] !== 'v1') {
+					WP_CLI::error('Key version incompatible or invalid key format.');
+				}
+				if ($parts[1] !== '') {
+					$pubkey = $parts[1];
+					if (strlen($pubkey) < 32) {
+						WP_CLI::error('Please enter valid key.');
+					}
+
+					MCAccount::remove($this->settings, $pubkey);
+
+					if (!MCAccount::exists($this->settings, $pubkey)) {
+						WP_CLI::success('Key Removed Successfully.');
+					} else {
+						WP_CLI::error('Key Removal Failed.');
+					}
+				} else {
+					WP_CLI::error('Invalid key format.');
+				}
+			} else {
+				WP_CLI::error('Invalid key format.');
 			}
 		}
 	}

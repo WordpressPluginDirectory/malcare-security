@@ -1,0 +1,246 @@
+.mc-accounts-card {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	padding: 24px 24px 32px;
+	border: 1px solid var(--mc-connect-border);
+	border-radius: 24px;
+	background: var(--mc-connect-surface);
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.mc-accounts-card-header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.mc-accounts-card-header svg {
+	width: 24px;
+	height: 24px;
+	flex: 0 0 auto;
+	color: var(--mc-connect-black);
+}
+
+.mc-accounts-card-header h2 {
+	color: var(--mc-connect-black);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 20px;
+}
+
+.mc-accounts-table-wrap {
+	display: flex;
+	min-width: 0;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.mc-accounts-table-scroll {
+	width: 100%;
+	max-height: 376px;
+	overflow: auto;
+	border-radius: 6px;
+}
+
+.mc-accounts-table {
+	width: 100%;
+	min-width: 680px;
+	border: 0;
+	border-spacing: 0;
+	border-collapse: collapse;
+	background: transparent;
+}
+
+.mc-accounts-table th,
+.mc-accounts-table td {
+	padding: 8px;
+	border: 0;
+	border-bottom: 1px solid var(--mc-connect-border);
+	text-align: left;
+	vertical-align: middle;
+}
+
+.mc-accounts-table th {
+	position: sticky;
+	z-index: 1;
+	top: 0;
+	height: 40px;
+	background: var(--mc-connect-surface);
+	color: var(--mc-connect-zinc-700);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+}
+
+.mc-accounts-table th:nth-child(1),
+.mc-accounts-table td:nth-child(1) {
+	width: 40%;
+}
+
+.mc-accounts-table th:nth-child(2),
+.mc-accounts-table td:nth-child(2) {
+	width: 40%;
+}
+
+.mc-accounts-table th:nth-child(3),
+.mc-accounts-table td:nth-child(3) {
+	width: 20%;
+	min-width: 180px;
+}
+
+.mc-accounts-table td {
+	height: 72px;
+	color: var(--mc-connect-zinc-700);
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.mc-accounts-table tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+.mc-accounts-email {
+	max-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mc-accounts-synced {
+	color: var(--mc-connect-zinc-500) !important;
+}
+
+.mc-accounts-disconnect-form {
+	margin: 0;
+}
+
+.mc-connect-page .mc-accounts-disconnect-button,
+.mc-accounts-dashboard-button,
+.mc-accounts-connect-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 14px;
+	white-space: nowrap;
+	transition: background-color 150ms ease-in-out, border-color 150ms ease-in-out;
+}
+
+.mc-connect-page .mc-accounts-disconnect-button {
+	height: 32px;
+	padding: 8px;
+	border: 1px solid var(--mc-connect-border);
+	background: var(--mc-connect-surface);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	color: var(--mc-connect-blue-900);
+}
+
+.mc-connect-page .mc-accounts-disconnect-button:hover:not(:disabled) {
+	border-color: #bfdbfe;
+	background: var(--mc-connect-zinc-50);
+}
+
+.mc-connect-page .mc-accounts-disconnect-button:disabled {
+	cursor: wait;
+	opacity: 0.65;
+}
+
+.mc-connect-page .mc-accounts-disconnect-button svg {
+	width: 16px;
+	height: 16px;
+	stroke-width: 1.5;
+}
+
+.mc-accounts-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 16px;
+}
+
+.mc-accounts-dashboard-button,
+.mc-accounts-connect-button {
+	height: 40px;
+	padding: 8px 16px;
+}
+
+.mc-accounts-dashboard-button {
+	color: var(--mc-connect-blue-900) !important;
+}
+
+.mc-accounts-dashboard-button:hover {
+	background: var(--mc-connect-zinc-50);
+}
+
+.mc-accounts-connect-button {
+	background: var(--mc-connect-blue-900);
+	color: var(--mc-connect-white) !important;
+}
+
+.mc-accounts-connect-button:hover {
+	background: var(--mc-connect-blue-800);
+}
+
+.mc-accounts-dashboard-button svg,
+.mc-accounts-connect-button svg {
+	width: 20px;
+	height: 20px;
+}
+
+.mc-accounts-empty {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 6px;
+	padding: 40px 24px;
+	border: 1px dashed var(--mc-connect-zinc-300);
+	border-radius: 12px;
+	background: var(--mc-connect-zinc-50);
+	text-align: center;
+}
+
+.mc-accounts-empty strong {
+	color: var(--mc-connect-black);
+	font-size: 15px;
+}
+
+.mc-accounts-empty span {
+	color: var(--mc-connect-zinc-500);
+	font-size: 13px;
+}
+
+@media (min-width: 1201px) and (max-height: 850px) {
+	.mc-accounts-card {
+		gap: 20px;
+		padding-top: 20px;
+		padding-bottom: 24px;
+	}
+}
+
+@media (max-width: 782px) {
+	.mc-accounts-card {
+		padding: 20px;
+		border-radius: 18px;
+	}
+}
+
+@media (max-width: 600px) {
+	.mc-accounts-card {
+		gap: 24px;
+		padding: 20px 16px 24px;
+	}
+
+	.mc-accounts-buttons {
+		align-items: stretch;
+		flex-direction: column-reverse;
+	}
+
+	.mc-accounts-dashboard-button,
+	.mc-accounts-connect-button {
+		width: 100%;
+	}
+}

@@ -45,7 +45,7 @@ class MCWPAdmin {
 			$keys = str_split($blogvaultkey, 32);
 			MCAccount::addAccount($this->settings, $keys[0], $keys[1]);
 			$pubkey = $keys[0];
-			if (array_key_exists($_REQUEST, 'redirect')) {
+			if (MCHelper::getRawParam('REQUEST', 'redirect') !== null) {
 				$this->account = MCAccount::find($this->settings, $pubkey);
 				wp_redirect($this->account->authenticatedUrl('/malcare/access/welcome'));
 				exit();
@@ -108,12 +108,25 @@ class MCWPAdmin {
 	}
 
 	public function mcsecAdminMenu($hook) {
-		if ($hook === 'toplevel_page_malcare' || MCHelper::safePregMatch("/bv_add_account$/", $hook) ||
-				MCHelper::safePregMatch("/bv_account_details$/", $hook)) {
-			wp_enqueue_style('bootstrap', plugins_url('css/bootstrap.min.css', __FILE__), array(), $this->bvinfo->version);
-			wp_enqueue_style('bvplugin', plugins_url('css/bvplugin.min.css', __FILE__), array(), $this->bvinfo->version);
-			wp_enqueue_script('mc-connection-key', plugins_url('js/connection-key.js', __FILE__), array(), $this->bvinfo->version, true);
+		$is_add_account_page = MCHelper::safePregMatch("/bv_add_account$/", $hook);
+		$is_account_details_submenu = MCHelper::safePregMatch("/bv_account_details$/", $hook);
+		$is_top_level_page = $hook === 'toplevel_page_malcare';
+		$show_add_account = MCHelper::getRawParam('REQUEST', 'add_account') !== null;
+		$show_account_details = MCHelper::getRawParam('REQUEST', 'account_details') !== null;
+		$is_connect_site_page = $is_add_account_page || ($is_top_level_page && !$show_account_details &&
+				($show_add_account || !MCAccount::isConfigured($this->settings)));
+		$is_connected_accounts_page = $is_account_details_submenu || ($is_top_level_page && $show_account_details);
+
+		if ($is_connect_site_page || $is_connected_accounts_page) {
+			wp_enqueue_style('mc-connect-site', plugins_url('css/connect-site.css', __FILE__), array(), $this->bvinfo->version);
+			wp_enqueue_script('mc-connect-site', plugins_url('js/connect-site.js', __FILE__), array(), $this->bvinfo->version, true);
+			if ($is_connected_accounts_page) {
+				wp_enqueue_style('mc-connected-accounts', plugins_url('css/connected-accounts.css', __FILE__), array('mc-connect-site'), $this->bvinfo->version);
+				wp_enqueue_script('mc-connected-accounts', plugins_url('js/connected-accounts.js', __FILE__), array(), $this->bvinfo->version, true);
+			}
+			return;
 		}
+
 	}
 
 	public function menu() {
@@ -238,6 +251,7 @@ class MCWPAdmin {
 		$bvnonce = wp_create_nonce("bvnonce");
 		$public = MCAccount::getApiPublicKey($this->settings);
 		$secret = MCRecover::defaultSecret($this->settings);
+		$ctag = MCRecover::connectionTag($this->settings);
 		$server_ip = MCHelper::getStringParamEscaped('SERVER', 'SERVER_ADDR', 'attr');
 		$tags = "<input type='hidden' name='url' value='".esc_attr($this->siteinfo->wpurl())."'/>\n".
 				"<input type='hidden' name='homeurl' value='".esc_attr($this->siteinfo->homeurl())."'/>\n".
@@ -249,6 +263,7 @@ class MCWPAdmin {
 				"<input type='hidden' name='serverip' value='".$server_ip."'/>\n".
 				"<input type='hidden' name='abspath' value='".esc_attr(ABSPATH)."'/>\n".
 				"<input type='hidden' name='secret' value='".esc_attr($secret)."'/>\n".
+				"<input type='hidden' name='bvctag' value='".esc_attr($ctag)."'/>\n".
 				"<input type='hidden' name='public' value='".esc_attr($public)."'/>\n".
 				"<input type='hidden' name='bvnonce' value='".esc_attr($bvnonce)."'/>\n";
 		return $tags;
@@ -336,6 +351,20 @@ class MCWPAdmin {
 		require_once dirname( __FILE__ ) . "/admin/dashboard.php";
 	}
 
+	public function formatAccountSyncTime($timestamp) {
+		if (!is_numeric($timestamp) || (int) $timestamp <= 0) {
+			return 'Not synced yet';
+		}
+
+		if (function_exists('wp_date')) {
+			$format = get_option('date_format') . ' (' . get_option('time_format') . ' T)';
+			return wp_date($format, (int) $timestamp);
+		}
+
+		// Preserve the UTC display used before WordPress 5.3 introduced wp_date().
+		return gmdate('Y-m-d H:i:s', (int) $timestamp);
+	}
+
 	public function adminPage() {
 		$bvnonce = MCHelper::getRawParam('REQUEST', 'bvnonce');
 		if ($bvnonce && wp_verify_nonce($bvnonce, 'bvnonce')) {
@@ -349,7 +378,8 @@ class MCWPAdmin {
 				MCAccount::remove($this->settings, $pubkey);
 			}
 		}
-			if (isset($_REQUEST['account_details'])) {
+
+		if (isset($_REQUEST['account_details'])) {
 			$this->showAccountDetailsPage();
 		} else if (isset($_REQUEST['add_account'])) {
 			$this->showAddAccountPage();

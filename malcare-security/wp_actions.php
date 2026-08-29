@@ -53,7 +53,7 @@ if (!class_exists('MCWPAction')) :
 		}
 
 		public function clear_wp_2fa_config() {
-			$meta_keys = array('mc_2fa_enabled', 'mc_2fa_secret');
+			$meta_keys = array('mc_2fa_enabled', 'mc_2fa_secret', 'mc_2fa_method', 'mc_2fa_email_challenge', 'mc_2fa_email_rate', 'mc_2fa_attempts');
 			foreach ($meta_keys as $meta_key) {
 					$this->settings->deleteMetaData('user', null, $meta_key, '', true);
 			}

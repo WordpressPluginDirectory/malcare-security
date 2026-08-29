@@ -4,9 +4,9 @@ Tags: wordpress security, firewall, malware scanner, malware removal, vulnerabil
 Plugin URI: https://www.malcare.com
 Donate link: https://www.malcare.com
 Requires at least: 4.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 6.48
+Stable tag: 6.72
 License: GPLv2 or later
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -402,6 +402,24 @@ FTP details input into MalCare is processed on our servers. We need your FTP cre
 These are available on our website: [Terms of Service](https://www.malcare.com/tos/) and [Privacy Policy](https://www.malcare.com/privacy/)
 
 == CHANGELOG ==
+= 6.72 =
+* Tweak: Added validation checks for input params.
+
+= 6.69 =
+* New: Added email-based two-factor authentication for WordPress users.
+
+= 6.65 =
+* Improvement: Enhanced secret generation using the secure random_int function.
+* Improvement: Improved connection key generation mechanism.
+* New: Added file-editing and modification hardening controls.
+* Tweak: Improved uptime monitoring with full-page checks.
+* Tweak: Redesigned site connection and account management pages.
+* Tweak: Improved firewall.
+
+= 6.62 =
+* Tweak: Firewall improvements.
+* Tweak: Table sync improvements.
+
 = 6.48 =
 * Fix: Preserve default PHP error handling after PHP Error Monitoring processes an error.
 * Tweak: Reduce repeated firewall IP whitelist lookups.
